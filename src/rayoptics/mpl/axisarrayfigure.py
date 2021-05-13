@@ -166,6 +166,8 @@ class RayFanFigure(AxisArrayFigure):
         return self
 
     def plot(self):
+        print('hi from rayfanfigure in mpl axisarrayfigure.py')
+
         if hasattr(self, 'ax_arr'):
             self.clf()
 
@@ -178,6 +180,8 @@ class RayFanFigure(AxisArrayFigure):
             for j in reversed(range(self.num_cols)):
                 x_data, y_data, max_value, rc = self.axis_data_array[m-i][n-j]
                 ax = self.ax_arr[m-i][n-j]
+                ax.set_xlabel('X Axis')
+
                 for k in range(len(x_data)):
                     if self.override_style:
                         ax.plot(x_data[k], y_data[k], c=rc[k])
