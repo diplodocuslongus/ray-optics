@@ -180,7 +180,12 @@ class RayFanFigure(AxisArrayFigure):
             for j in reversed(range(self.num_cols)):
                 x_data, y_data, max_value, rc = self.axis_data_array[m-i][n-j]
                 ax = self.ax_arr[m-i][n-j]
-                ax.set_xlabel('X Axis')
+                # not sure how to do so that we have tangential and sagitall axis label
+                # below is hackish
+                if j == 0:
+                    ax.set_xlabel('sagitall')
+                elif j == 1:
+                    ax.set_xlabel('meridional (tangential)')
 
                 for k in range(len(x_data)):
                     if self.override_style:
@@ -190,7 +195,7 @@ class RayFanFigure(AxisArrayFigure):
 
                 if max_value > self.max_value_all:
                     self.max_value_all = max_value
-
+        ax.set_title('transverse ray aberration')
         if self.scale_type == Fit.All:
             pass
 #            print("Fit.All", self.max_value_all)
