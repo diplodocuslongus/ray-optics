@@ -74,9 +74,9 @@ class AxisArrayFigure(StyledFigure):
             for j in reversed(range(n)):
                 ax = self.add_subplot(m, n, k)
                 self.init_axis(ax)
-#                title = "["+str(i)+"],["+str(j)+"]"
-#                print("title, id(ax):", title, id(ax))
-#                ax.set_title(title)
+                #title = "["+str(i)+"],["+str(j)+"]"
+                #print("title, id(ax):", title, id(ax))
+                #ax.set_title(title)
                 row.append(ax)
                 k += 1
             arr.append(row)
@@ -166,7 +166,7 @@ class RayFanFigure(AxisArrayFigure):
         return self
 
     def plot(self):
-        print('hi from rayfanfigure in mpl axisarrayfigure.py')
+        print('from rayfanfigure in mpl axisarrayfigure.py')
 
         if hasattr(self, 'ax_arr'):
             self.clf()
@@ -183,9 +183,18 @@ class RayFanFigure(AxisArrayFigure):
                 # not sure how to do so that we have tangential and sagitall axis label
                 # below is hackish
                 if j == 0:
-                    ax.set_xlabel('sagitall')
-                elif j == 1:
-                    ax.set_xlabel('meridional (tangential)')
+                    ax.set_ylabel('field'+str(i))
+                if i == 0:
+                    ax.set_xlabel('x')
+                #elif j == 1:
+                #    ax.set_xlabel('x')
+
+                # was in construct_plot_array
+                # use to check where to put titel
+
+                title = "["+str(i)+"],["+str(j)+"]"
+                print("title from plot of RayFanFigure, id(ax):", title, id(ax))
+                #ax.set_title(title)
 
                 for k in range(len(x_data)):
                     if self.override_style:
@@ -195,7 +204,10 @@ class RayFanFigure(AxisArrayFigure):
 
                 if max_value > self.max_value_all:
                     self.max_value_all = max_value
-        ax.set_title('transverse ray aberration')
+                                
+        self.ax_arr[0][0].set_title('tangential',fontsize=8)
+        self.ax_arr[0][1].set_title('sagittal',fontsize=8)
+        self.supylabel('fields')
         if self.scale_type == Fit.All:
             pass
 #            print("Fit.All", self.max_value_all)
@@ -209,6 +221,10 @@ class RayFanFigure(AxisArrayFigure):
 #            print("User_Scale", us)
             [[ax.set_ylim(-us, us) for ax in r] for r in self.ax_arr]
 
+        self.canvas.set_window_title('transverse ray aberration')
+        self.suptitle('transverse ray aberration',fontsize = 16)
+        self.tight_layout()
+        self.subplots_adjust(top=0.88)
         self.canvas.draw()
 
         return self
