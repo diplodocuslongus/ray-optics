@@ -182,10 +182,17 @@ class RayFanFigure(AxisArrayFigure):
                 ax = self.ax_arr[m-i][n-j]
                 # not sure how to do so that we have tangential and sagitall axis label
                 # below is hackish
-                if j == 0:
-                    ax.set_ylabel('field'+str(i))
-                if i == 0:
-                    ax.set_xlabel('x')
+                if j == 1:
+                    ax.set_ylabel('$ε_y$'+str(i)) # , loc='top')
+                elif j == 0:
+                    ax.set_ylabel('$ε_x$'+str(i)) # , loc='top')
+                    #ax.set_ylabel('field'+str(i))
+                props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+                ax.text(0.05, 0.95, 'gonzo', transform=ax.transAxes, fontsize=14, verticalalignment='top', bbox=props)
+                #if i == 0:
+                #    ax.set_xlabel('x')
+                ax.yaxis.set_label_coords(-0.075, 0.25)
+                ax.set_xlabel('ρ', loc='left')
                 #elif j == 1:
                 #    ax.set_xlabel('x')
 
@@ -225,6 +232,7 @@ class RayFanFigure(AxisArrayFigure):
         self.suptitle('transverse ray aberration',fontsize = 16)
         self.tight_layout()
         self.subplots_adjust(top=0.88)
+        self.set_size_inches(18.5, 10.5) #figsize [8.0, 6.0]
         self.canvas.draw()
 
         return self
